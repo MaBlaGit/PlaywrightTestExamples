@@ -47,15 +47,13 @@ test.describe('Testing different types of waits', () => {
 			await moveToWaitingConditionsPage.manageMinMaxWait(range.min, range.max);
 			await moveToWaitingConditionsPage.clickOnShowPromptButton();
 			await moveToWaitingConditionsPage.waitForPopup(state);
-			if (state === 'accept') {
-				await expect(moveToWaitingConditionsPage.promptOkText).toHaveText(
-					promptAccepted
-				);
-			} else {
-				await expect(
-					moveToWaitingConditionsPage.promptDismissedText
-				).toHaveText(promptDismissed);
-			}
+			state === 'accept'
+				? await expect(moveToWaitingConditionsPage.promptOkText).toHaveText(
+						promptAccepted
+				  )
+				: await expect(
+						moveToWaitingConditionsPage.promptDismissedText
+				  ).toHaveText(promptDismissed);
 		});
 	}
 });
