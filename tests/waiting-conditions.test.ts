@@ -1,5 +1,5 @@
 import { test, expect } from '../fixtures/merge.fixture';
-import { minMax } from '../test-data/test-data';
+import { minMaxAlert, minMaxPrompt } from '../test-data/test-data';
 
 test.describe('Testing different types of waits', () => {
 	const playgroundHeader = 'The Playground';
@@ -18,38 +18,44 @@ test.describe('Testing different types of waits', () => {
 		);
 	});
 
-	for (const data of minMax) {
-		test(`should be able to handle dialog popup when ${data.state}`, async ({
+	for (const second of Object.values(minMaxAlert.ranges)) {
+		test(`should be able to handle dialog between ${second.min} - ${second.max} sec`, async ({
 			moveToWaitingConditionsPage,
 		}) => {
 			const alertAccepted = 'Alert handled';
 			await moveToWaitingConditionsPage.waitFor(waitingConditionsPartialUrl);
+			await moveToWaitingConditionsPage.manageMinMaxWait(
+				second.min,
+				second.max
+			);
 			await moveToWaitingConditionsPage.clickOnShowAlertButton();
-			await moveToWaitingConditionsPage.waitForPopup(data.state);
+			await moveToWaitingConditionsPage.waitForPopup(minMaxAlert.state);
 			await expect(moveToWaitingConditionsPage.alertHandledText).toHaveText(
 				alertAccepted
 			);
 		});
 	}
 
-	// for (const range of minMaxRangePrompt) {
-	// 	test(`should be able to handle prompt when "${range.state}" was selected`, async ({
-	// 		moveToWaitingConditionsPage,
-	// 	}) => {
-	// 		const promptAccepted = 'OK';
-	// 		const promptDismissed = 'Cancelled';
-	// 		await moveToWaitingConditionsPage.waitFor(waitingConditionsPartialUrl);
-	// 		await moveToWaitingConditionsPage.clickOnShowPromptButton();
-	// 		await moveToWaitingConditionsPage.waitForPopup(range.state);
-	// 		if (range.state === 'accept') {
-	// 			await expect(moveToWaitingConditionsPage.promptOkText).toHaveText(
-	// 				promptAccepted
-	// 			);
-	// 		} else {
-	// 			await expect(
-	// 				moveToWaitingConditionsPage.promptDismissedText
-	// 			).toHaveText(promptDismissed);
-	// 		}
-	// 	});
-	// }
+	for (const { state, range } of minMaxPrompt) {
+		test(`should be able to handle prompt when "${state}" in range ${range.min} - ${range.max} sec`, async ({
+			moveToWaitingConditionsPage,
+		}) => {
+			const promptAccepted = 'OK';
+			const promptDismissed = 'Cancelled';
+
+			await moveToWaitingConditionsPage.waitFor(waitingConditionsPartialUrl);
+			await moveToWaitingConditionsPage.manageMinMaxWait(range.min, range.max);
+			await moveToWaitingConditionsPage.clickOnShowPromptButton();
+			await moveToWaitingConditionsPage.waitForPopup(state);
+			if (state === 'accept') {
+				await expect(moveToWaitingConditionsPage.promptOkText).toHaveText(
+					promptAccepted
+				);
+			} else {
+				await expect(
+					moveToWaitingConditionsPage.promptDismissedText
+				).toHaveText(promptDismissed);
+			}
+		});
+	}
 });

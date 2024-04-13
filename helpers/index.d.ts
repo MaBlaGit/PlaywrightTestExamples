@@ -1,4 +1,9 @@
-export type StateAndRange = {
+export interface Alert {
+	state: 'accept';
+	ranges: { min: number; max: number }[];
+}
+
+export interface Prompt {
 	state: 'accept' | 'dismiss';
-	ranges: { min: number; max: number };
-}[];
+	range: { min: number; max: number };
+}
