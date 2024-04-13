@@ -36,11 +36,6 @@ export class WaitingConditionsPage extends BasePage {
 		await this.maxWait.fill(max.toString());
 	}
 
-	async waitForPopup(action: 'accept' | 'dismiss'): Promise<void> {
-		const waifFor = await this.page.waitForEvent('dialog');
-		action === 'accept' ? await waifFor.accept() : await waifFor.dismiss();
-	}
-
 	async clickOnVisibilityTriggerButton(): Promise<void> {
 		await this.visibilityTriggerButton.click();
 	}
