@@ -15,6 +15,8 @@ export class WaitingConditionsPage extends BasePage {
 	promptDismissedText = this.page.locator('#confirm_cancelled_badge');
 	minWait = this.page.locator('#min_wait');
 	maxWait = this.page.locator('#max_wait');
+	visibilityTriggerButton = this.page.locator('#visibility_trigger');
+	clickMeVisibleButton = this.page.locator('#visibility_target');
 
 	async clickOnShowAlertButton(): Promise<void> {
 		await this.showAlertButton.click();
@@ -34,5 +36,9 @@ export class WaitingConditionsPage extends BasePage {
 	async waitForPopup(action: 'accept' | 'dismiss'): Promise<void> {
 		const waifFor = await this.page.waitForEvent('dialog');
 		action === 'accept' ? await waifFor.accept() : await waifFor.dismiss();
+	}
+
+	async clickOnVisibilityTriggerButton(): Promise<void> {
+		await this.visibilityTriggerButton.click();
 	}
 }

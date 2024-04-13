@@ -1,5 +1,9 @@
 import { test, expect } from '../fixtures/merge.fixture';
-import { minMaxAlert, minMaxPrompt } from '../test-data/test-data';
+import {
+	minMaxAlert,
+	minMaxPrompt,
+	minSecMaxSec,
+} from '../test-data/test-data';
 
 test.describe('Testing different types of waits', () => {
 	const playgroundHeader = 'The Playground';
@@ -57,4 +61,17 @@ test.describe('Testing different types of waits', () => {
 				  ).toHaveText(promptDismissed);
 		});
 	}
+
+	test('"Click Me" button should be visible after cartain amount of time', async ({
+		moveToWaitingConditionsPage,
+	}) => {
+		const clickMeButtonText = 'Click Me';
+		const { min, max } = minSecMaxSec;
+		await moveToWaitingConditionsPage.waitFor(waitingConditionsPartialUrl);
+		await moveToWaitingConditionsPage.manageMinMaxWait(min, max);
+		await moveToWaitingConditionsPage.clickOnVisibilityTriggerButton();
+		await expect(moveToWaitingConditionsPage.clickMeVisibleButton).toHaveText(
+			clickMeButtonText
+		);
+	});
 });

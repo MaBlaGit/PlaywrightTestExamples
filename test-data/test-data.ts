@@ -1,4 +1,4 @@
-import { Alert, Prompt } from '../helpers/index';
+import { Alert, Prompt, MinMaxRange } from '../helpers/index';
 
 export const minMaxAlert: Alert = {
 	state: 'accept',
@@ -19,3 +19,8 @@ export const minMaxPrompt: Array<Prompt> = [
 		range: { min: 1, max: 2 },
 	},
 ];
+
+export const minSecMaxSec: MinMaxRange = {
+	min: 1,
+	max: 3,
+};
