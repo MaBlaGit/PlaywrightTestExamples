@@ -74,4 +74,19 @@ test.describe('Testing different types of waits', () => {
 			clickMeButtonText
 		);
 	});
+
+	test('should trigger spinner dissaperance after button click', async ({
+		moveToWaitingConditionsPage,
+	}) => {
+		const spinnerGoneMessage = 'Thank God that spinner is gone!';
+		const { min, max } = minSecMaxSec;
+		await moveToWaitingConditionsPage.waitFor(waitingConditionsPartialUrl);
+		await moveToWaitingConditionsPage.manageMinMaxWait(min, max);
+		await moveToWaitingConditionsPage.clickDissaperanceButton();
+		const spinner = moveToWaitingConditionsPage.spinnerVisible;
+		await spinner.waitFor({ state: 'hidden' });
+		await expect(moveToWaitingConditionsPage.spinnerInvisible).toHaveText(
+			spinnerGoneMessage
+		);
+	});
 });

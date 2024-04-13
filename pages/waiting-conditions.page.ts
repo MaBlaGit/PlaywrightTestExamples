@@ -17,6 +17,9 @@ export class WaitingConditionsPage extends BasePage {
 	maxWait = this.page.locator('#max_wait');
 	visibilityTriggerButton = this.page.locator('#visibility_trigger');
 	clickMeVisibleButton = this.page.locator('#visibility_target');
+	disapperanceButton = this.page.locator('#invisibility_trigger');
+	spinnerVisible = this.page.locator('#invisibility_target');
+	spinnerInvisible = this.page.locator('#spinner_gone');
 
 	async clickOnShowAlertButton(): Promise<void> {
 		await this.showAlertButton.click();
@@ -40,5 +43,9 @@ export class WaitingConditionsPage extends BasePage {
 
 	async clickOnVisibilityTriggerButton(): Promise<void> {
 		await this.visibilityTriggerButton.click();
+	}
+
+	async clickDissaperanceButton(): Promise<void> {
+		await this.disapperanceButton.click();
 	}
 }
