@@ -42,12 +42,13 @@ test.describe('Testing different types of waits', () => {
 		}) => {
 			const promptAccepted = 'OK';
 			const promptDismissed = 'Cancelled';
+			const acceptedState = 'accept';
 
 			await moveToWaitingConditionsPage.waitFor(waitingConditionsPartialUrl);
 			await moveToWaitingConditionsPage.manageMinMaxWait(range.min, range.max);
 			await moveToWaitingConditionsPage.clickOnShowPromptButton();
 			await moveToWaitingConditionsPage.waitForPopup(state);
-			state === 'accept'
+			state === acceptedState
 				? await expect(moveToWaitingConditionsPage.promptOkText).toHaveText(
 						promptAccepted
 				  )
