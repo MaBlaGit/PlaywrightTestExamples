@@ -1,4 +1,4 @@
-import { Page } from '@playwright/test';
+import { Page, Locator } from '@playwright/test';
 
 export class BasePage {
 	url = '';
@@ -17,5 +17,12 @@ export class BasePage {
 	async waitForPopup(event: 'accept' | 'dismiss'): Promise<void> {
 		const waifFor = await this.page.waitForEvent('dialog');
 		event === 'accept' ? await waifFor.accept() : await waifFor.dismiss();
+	}
+
+	async waitForState(
+		locator: Locator,
+		state: 'attached' | 'detached' | 'hidden' | 'visible'
+	): Promise<void> {
+		await locator.waitFor({ state: state });
 	}
 }
