@@ -5,7 +5,6 @@ import { WaitingConditionsPage } from '../pages/waiting-conditions.page';
 interface Pages {
 	playgroundPage: PlaygroundPage;
 	waitingConditionsPage: WaitingConditionsPage;
-	moveToWaitingConditionsPage: WaitingConditionsPage;
 }
 
 export const pageObjectTest = baseTest.extend<Pages>({
@@ -16,11 +15,6 @@ export const pageObjectTest = baseTest.extend<Pages>({
 	},
 
 	waitingConditionsPage: async ({ page }, use) => {
-		const waitingConditionsPage = new WaitingConditionsPage(page);
-		use(waitingConditionsPage);
-	},
-
-	moveToWaitingConditionsPage: async ({ page }, use) => {
 		const waitingConditionsPage = new WaitingConditionsPage(page);
 		await waitingConditionsPage.goto();
 		use(waitingConditionsPage);

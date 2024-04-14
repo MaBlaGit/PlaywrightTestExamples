@@ -11,12 +11,12 @@ test.describe('Testing different types of waits', () => {
 
 	test('should be able navigate to Waiting Conditions page', async ({
 		playgroundPage,
-		waitingConditionsPage,
 	}) => {
 		await expect(playgroundPage.playgroundPageHeader).toHaveText(
 			playgroundHeader
 		);
-		await playgroundPage.selectExpectedConditions();
+		const waitingConditionsPage =
+			await playgroundPage.selectExpectedConditions();
 		expect(waitingConditionsPage.currentPage.url()).toContain(
 			waitingConditionsPartialUrl
 		);
@@ -24,17 +24,14 @@ test.describe('Testing different types of waits', () => {
 
 	for (const second of Object.values(minMaxAlert.ranges)) {
 		test(`should be able to handle dialog between ${second.min} - ${second.max} sec`, async ({
-			moveToWaitingConditionsPage,
+			waitingConditionsPage,
 		}) => {
 			const alertAccepted = 'Alert handled';
-			await moveToWaitingConditionsPage.waitFor(waitingConditionsPartialUrl);
-			await moveToWaitingConditionsPage.manageMinMaxWait(
-				second.min,
-				second.max
-			);
-			await moveToWaitingConditionsPage.clickOnShowAlertButton();
-			await moveToWaitingConditionsPage.waitForPopup(minMaxAlert.state);
-			await expect(moveToWaitingConditionsPage.alertHandledText).toHaveText(
+			await waitingConditionsPage.waitFor(waitingConditionsPartialUrl);
+			await waitingConditionsPage.manageMinMaxWait(second.min, second.max);
+			await waitingConditionsPage.clickOnShowAlertButton();
+			await waitingConditionsPage.waitForPopup(minMaxAlert.state);
+			await expect(waitingConditionsPage.alertHandledText).toHaveText(
 				alertAccepted
 			);
 		});
@@ -42,51 +39,51 @@ test.describe('Testing different types of waits', () => {
 
 	for (const { state, range } of minMaxPrompt) {
 		test(`should be able to handle prompt when "${state}" in range ${range.min} - ${range.max} sec`, async ({
-			moveToWaitingConditionsPage,
+			waitingConditionsPage,
 		}) => {
 			const promptAccepted = 'OK';
 			const promptDismissed = 'Cancelled';
 			const acceptedState = 'accept';
 
-			await moveToWaitingConditionsPage.waitFor(waitingConditionsPartialUrl);
-			await moveToWaitingConditionsPage.manageMinMaxWait(range.min, range.max);
-			await moveToWaitingConditionsPage.clickOnShowPromptButton();
-			await moveToWaitingConditionsPage.waitForPopup(state);
+			await waitingConditionsPage.waitFor(waitingConditionsPartialUrl);
+			await waitingConditionsPage.manageMinMaxWait(range.min, range.max);
+			await waitingConditionsPage.clickOnShowPromptButton();
+			await waitingConditionsPage.waitForPopup(state);
 			state === acceptedState
-				? await expect(moveToWaitingConditionsPage.promptOkText).toHaveText(
+				? await expect(waitingConditionsPage.promptOkText).toHaveText(
 						promptAccepted
 				  )
-				: await expect(
-						moveToWaitingConditionsPage.promptDismissedText
-				  ).toHaveText(promptDismissed);
+				: await expect(waitingConditionsPage.promptDismissedText).toHaveText(
+						promptDismissed
+				  );
 		});
 	}
 
-	test('"Click Me" button should be visible after cartain amount of time', async ({
-		moveToWaitingConditionsPage,
+	test('"Click Me" button should be visible after certain amount of time', async ({
+		waitingConditionsPage,
 	}) => {
 		const clickMeButtonText = 'Click Me';
 		const { min, max } = minSecMaxSec;
-		await moveToWaitingConditionsPage.waitFor(waitingConditionsPartialUrl);
-		await moveToWaitingConditionsPage.manageMinMaxWait(min, max);
-		await moveToWaitingConditionsPage.clickOnVisibilityTriggerButton();
-		await expect(moveToWaitingConditionsPage.clickMeVisibleButton).toHaveText(
+		await waitingConditionsPage.waitFor(waitingConditionsPartialUrl);
+		await waitingConditionsPage.manageMinMaxWait(min, max);
+		await waitingConditionsPage.clickOnVisibilityTriggerButton();
+		await expect(waitingConditionsPage.clickMeVisibleButton).toHaveText(
 			clickMeButtonText
 		);
 	});
 
-	test('should trigger spinner dissaperance after button click', async ({
-		moveToWaitingConditionsPage,
+	test('should trigger spinner disappearance after button click', async ({
+		waitingConditionsPage,
 	}) => {
 		const spinnerState = 'hidden';
 		const spinnerGoneMessage = 'Thank God that spinner is gone!';
 		const { min, max } = minSecMaxSec;
-		await moveToWaitingConditionsPage.waitFor(waitingConditionsPartialUrl);
-		await moveToWaitingConditionsPage.manageMinMaxWait(min, max);
-		await moveToWaitingConditionsPage.clickDissaperanceButton();
-		const spinner = moveToWaitingConditionsPage.spinnerVisible;
-		await moveToWaitingConditionsPage.waitForState(spinner, spinnerState);
-		await expect(moveToWaitingConditionsPage.spinnerInvisible).toHaveText(
+		await waitingConditionsPage.waitFor(waitingConditionsPartialUrl);
+		await waitingConditionsPage.manageMinMaxWait(min, max);
+		await waitingConditionsPage.clickDisappearanceButton();
+		const spinner = waitingConditionsPage.spinnerVisible;
+		await waitingConditionsPage.waitForState(spinner, spinnerState);
+		await expect(waitingConditionsPage.spinnerInvisible).toHaveText(
 			spinnerGoneMessage
 		);
 	});
