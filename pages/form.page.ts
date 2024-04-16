@@ -7,28 +7,32 @@ export class FormPage extends BasePage {
 	constructor(page: Page) {
 		super(page);
 	}
-
+	formHeader = this.page.getByText('Basic Form Controls');
 	yearsOfExperienceInput = this.page.locator('#exp');
-	pythonCheckbox = this.page.locator('#check_python');
+	selectedYearsOfExperience = this.page.locator('#exp_help');
+	pythonCheckbox = this.page.locator('#check_python+label');
 	javaScriptCheckbox = this.page.locator('#check_javascript');
+	selectedCheckboxValidationText = this.page.locator('#check_validate');
 	seleniumRadioButton = this.page.locator('#rad_selenium');
 	protractorRadioButton = this.page.locator('#rad_protractor');
 	primarySkillSelect = this.page.locator('#select_tool');
+	chooseLanguageSelect = this.page.locator('#select_lang');
+	selectedLanguageValidationText = this.page.locator('#select_lang_validate');
 
 	async enterYearsOfExperience(yearsOfExperience: number): Promise<void> {
 		await this.yearsOfExperienceInput.fill(yearsOfExperience.toString());
 	}
 
-	async selectLanguageCheckbox(lang: 'python' | 'selenium'): Promise<void> {
+	async selectLanguageCheckbox(lang: 'python' | 'javascript'): Promise<void> {
 		lang === 'python'
-			? await this.pythonCheckbox.check()
-			: await this.javaScriptCheckbox.check();
+			? await this.pythonCheckbox.click()
+			: await this.javaScriptCheckbox.click();
 	}
 
 	async selectFramework(framework: 'selenium' | 'protractor'): Promise<void> {
 		framework === 'selenium'
 			? await this.seleniumRadioButton.click()
-			: await this.protractorRadioButton.check();
+			: await this.protractorRadioButton.click();
 	}
 
 	async selectPrimarySkills(
@@ -43,6 +47,25 @@ export class FormPage extends BasePage {
 				break;
 			case 'cypress':
 				await this.primarySkillSelect.selectOption({ label: 'Cypress' });
+				break;
+		}
+	}
+	async selectLanguage(
+		...lang: ('Java' | 'Python' | 'JavaScript' | 'TypeScript')[]
+	): Promise<void> {
+		const [selectedLang] = lang;
+		switch (selectedLang) {
+			case 'Java':
+				await this.chooseLanguageSelect.selectOption({ label: 'Java' });
+				break;
+			case 'Python':
+				await this.chooseLanguageSelect.selectOption({ label: 'Python' });
+				break;
+			case 'JavaScript':
+				await this.chooseLanguageSelect.selectOption({ label: 'JavaScript' });
+				break;
+			case 'TypeScript':
+				await this.chooseLanguageSelect.selectOption({ label: 'TypeScript' });
 				break;
 		}
 	}
