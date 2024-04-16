@@ -15,6 +15,11 @@ export class WaitingConditionsPage extends BasePage {
 	promptDismissedText = this.page.locator('#confirm_cancelled_badge');
 	minWait = this.page.locator('#min_wait');
 	maxWait = this.page.locator('#max_wait');
+	visibilityTriggerButton = this.page.locator('#visibility_trigger');
+	clickMeVisibleButton = this.page.locator('#visibility_target');
+	disappearanceButton = this.page.locator('#invisibility_trigger');
+	spinnerVisible = this.page.locator('#invisibility_target');
+	spinnerInvisible = this.page.locator('#spinner_gone');
 
 	async clickOnShowAlertButton(): Promise<void> {
 		await this.showAlertButton.click();
@@ -26,13 +31,16 @@ export class WaitingConditionsPage extends BasePage {
 
 	async manageMinMaxWait(min: number, max: number): Promise<void> {
 		await this.minWait.clear();
-		await this.maxWait.clear();
 		await this.minWait.fill(min.toString());
+		await this.maxWait.clear();
 		await this.maxWait.fill(max.toString());
 	}
 
-	async waitForPopup(action: 'accept' | 'dismiss'): Promise<void> {
-		const waifFor = await this.page.waitForEvent('dialog');
-		action === 'accept' ? await waifFor.accept() : await waifFor.dismiss();
+	async clickOnVisibilityTriggerButton(): Promise<void> {
+		await this.visibilityTriggerButton.click();
+	}
+
+	async clickDisappearanceButton(): Promise<void> {
+		await this.disappearanceButton.click();
 	}
 }

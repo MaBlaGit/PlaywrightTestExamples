@@ -1,5 +1,6 @@
 import { Page } from '@playwright/test';
 import { BasePage } from './base.page';
+import { WaitingConditionsPage } from './waiting-conditions.page';
 
 export class PlaygroundPage extends BasePage {
 	url = '/';
@@ -13,7 +14,8 @@ export class PlaygroundPage extends BasePage {
 
 	playgroundPageHeader = this.page.getByText('The Playground');
 
-	async selectExpectedConditions(): Promise<void> {
+	async selectExpectedConditions(): Promise<WaitingConditionsPage> {
 		await this.waitConditionsButton.click();
+		return new WaitingConditionsPage(this.page);
 	}
 }

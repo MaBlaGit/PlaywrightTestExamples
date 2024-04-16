@@ -1,4 +1,14 @@
-export type StateAndRange = {
+export interface Alert {
+	state: 'accept';
+	ranges: Array<MinMaxRange>;
+}
+
+export interface Prompt {
 	state: 'accept' | 'dismiss';
-	ranges: { min: number; max: number };
-}[];
+	range: MinMaxRange;
+}
+
+interface MinMaxRange {
+	min: number;
+	max: number;
+}
