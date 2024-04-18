@@ -18,6 +18,9 @@ export class FormPage extends BasePage {
 	primarySkillSelect = this.page.locator('#select_tool');
 	chooseLanguageSelect = this.page.locator('#select_lang');
 	selectedLanguageValidationText = this.page.locator('#select_lang_validate');
+	notesTextarea = this.page.locator('textarea#notes');
+	fileUpload = this.page.locator('input#upload_cv');
+	fileNameValidationText = this.page.locator('span#validate_cv');
 
 	async enterYearsOfExperience(yearsOfExperience: number): Promise<void> {
 		await this.yearsOfExperienceInput.fill(yearsOfExperience.toString());
@@ -57,5 +60,14 @@ export class FormPage extends BasePage {
 			this.page.locator(`option[value=${lang.toLowerCase()}]`)
 					 .click({modifiers: ['Control']});
 		}
+	}
+
+	async enterNote(note: string):Promise<void> {
+		await this.notesTextarea.fill(note);
+	}
+
+	async uploadSingleFile(fileName: string):Promise<void> {
+		await this.fileUpload.click();
+		await this.fileUpload.setInputFiles(`../test-files/${fileName}`);
 	}
 }
