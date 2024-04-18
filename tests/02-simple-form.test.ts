@@ -8,8 +8,8 @@ test.describe('Basic Form tests', () => {
 		await formPage.selectFramework('selenium');
 		await formPage.selectPrimarySkills('cypress');
 		await formPage.enterYearsOfExperience(5);
-		await formPage.selectLanguage('Python');
-		await expect(formPage.selectedLanguageValidationText).toHaveText('python');
+		await formPage.selectLanguage('Python', 'TypeScript');
+		await expect(formPage.selectedLanguageValidationText).toContainText('python,typescript');
 		//await expect(formPage.selectedYearsOfExperience).toHaveText('5');
 	});
 });

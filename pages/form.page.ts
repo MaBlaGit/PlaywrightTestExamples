@@ -51,22 +51,11 @@ export class FormPage extends BasePage {
 		}
 	}
 	async selectLanguage(
-		...lang: ('Java' | 'Python' | 'JavaScript' | 'TypeScript')[]
+		...langs: ('Java' | 'Python' | 'JavaScript' | 'TypeScript')[]
 	): Promise<void> {
-		const [selectedLang] = lang;
-		switch (selectedLang) {
-			case 'Java':
-				await this.chooseLanguageSelect.selectOption({ label: 'Java' });
-				break;
-			case 'Python':
-				await this.chooseLanguageSelect.selectOption({ label: 'Python' });
-				break;
-			case 'JavaScript':
-				await this.chooseLanguageSelect.selectOption({ label: 'JavaScript' });
-				break;
-			case 'TypeScript':
-				await this.chooseLanguageSelect.selectOption({ label: 'TypeScript' });
-				break;
+		for(let lang of langs) {
+			this.page.locator(`option[value=${lang.toLowerCase()}]`)
+					 .click({modifiers: ['Control']});
 		}
 	}
 }
