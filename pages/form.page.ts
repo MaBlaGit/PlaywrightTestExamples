@@ -1,5 +1,6 @@
-import { Page } from '@playwright/test';
+import { Page, Locator } from '@playwright/test';
 import { BasePage } from '../pages/base.page';
+import path from 'path';
 
 export class FormPage extends BasePage {
 	url = '/forms.html';
@@ -20,7 +21,10 @@ export class FormPage extends BasePage {
 	selectedLanguageValidationText = this.page.locator('#select_lang_validate');
 	notesTextarea = this.page.locator('textarea#notes');
 	fileUpload = this.page.locator('input#upload_cv');
+	filesUpload = this.page.locator('input#upload_files');
 	fileNameValidationText = this.page.locator('span#validate_cv');
+	fileNamesValidationText = this.page.locator('span#validate_files');
+	downloadFileLink = this.page.locator('#download_file');
 
 	async enterYearsOfExperience(yearsOfExperience: number): Promise<void> {
 		await this.yearsOfExperienceInput.fill(yearsOfExperience.toString());
@@ -67,7 +71,13 @@ export class FormPage extends BasePage {
 	}
 
 	async uploadSingleFile(fileName: string):Promise<void> {
-		await this.fileUpload.click();
 		await this.fileUpload.setInputFiles(`../test-files/${fileName}`);
+	}
+
+	async uploadMultipleFiles(...fileNames: string[]): Promise<void> {
+		const uploadFilesArray = fileNames.map(fileName => {
+			return `../test-files/${fileName}`;
+		});
+		await this.filesUpload.setInputFiles(uploadFilesArray);
 	}
 }
