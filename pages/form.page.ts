@@ -1,6 +1,6 @@
-import { Page, Locator } from '@playwright/test';
+import { Page, expect } from '@playwright/test';
 import { BasePage } from '../pages/base.page';
-import path from 'path';
+import { ProgrammingLanguages, ValidationMessage } from '../helpers/index';
 
 export class FormPage extends BasePage {
 	url = '/forms.html';
@@ -8,6 +8,7 @@ export class FormPage extends BasePage {
 	constructor(page: Page) {
 		super(page);
 	}
+
 	formHeader = this.page.getByText('Basic Form Controls');
 	yearsOfExperienceInput = this.page.locator('#exp');
 	selectedYearsOfExperience = this.page.locator('#exp_help');
@@ -29,10 +30,14 @@ export class FormPage extends BasePage {
 	cityStateInput = this.page.locator('#validationCustom04');
 	cityZipInput = this.page.locator('#validationCustom05');
 	termsAndConditionsCheckbox = this.page.locator('#invalidCheck');
+	cityValidationMessage = this.page.locator('#invalid_city');
+	stateValidationMessage = this.page.locator('#invalid_state');
+	zipValidationMessage = this.page.locator('#invalid_zip');
 	submitFormButton = this.page.getByRole('button', { name: 'Submit Form' });
 
-	async enterYearsOfExperience(yearsOfExperience: number): Promise<void> {
-		await this.yearsOfExperienceInput.fill(yearsOfExperience.toString());
+
+	async enterYearsOfExperience(yearsOfExperience: string): Promise<void> {
+		await this.yearsOfExperienceInput.fill(yearsOfExperience);
 	}
 
 	async selectLanguageCheckbox(lang: 'python' | 'javascript'): Promise<void> {
@@ -63,7 +68,7 @@ export class FormPage extends BasePage {
 		}
 	}
 	async selectLanguage(
-		...langs: ('Java' | 'Python' | 'JavaScript' | 'TypeScript')[]
+		langs: ProgrammingLanguages[]
 	): Promise<void> {
 		for (let lang of langs) {
 			this.page
@@ -104,6 +109,28 @@ export class FormPage extends BasePage {
 			await this.termsAndConditionsCheckbox.click();
 			await this.submitFormButton.click();
 			await responsePromise;
+		}
+		await this.submitFormButton.click();
+	}
+
+	async assertFormErrorMessages(validationMsgCity: ValidationMessage,
+								  validationMsgState: ValidationMessage, 
+								  validationMsgZip: ValidationMessage): Promise<void> {
+		if(validationMsgCity.isVisible) {
+			await expect(this.cityValidationMessage).toHaveText(validationMsgCity.msg);
+		} else {
+			await expect(this.cityValidationMessage).not.toBeVisible();
+		}
+
+		if(validationMsgState.isVisible) {
+			await expect(this.stateValidationMessage).toHaveText(validationMsgState.msg);
+		} else {
+			await expect(this.stateValidationMessage).not.toBeVisible();
+		}
+		if(validationMsgZip.isVisible) {
+			await expect(this.zipValidationMessage).toHaveText(validationMsgZip.msg);
+		} else {
+			await expect(this.zipValidationMessage).not.toBeVisible();
 		}
 	}
 }
