@@ -1,14 +1,16 @@
 {
-  "name": "playwrighttesting",
-  "version": "1.0.0",
-  "description": "",
-  "main": "index.js",
-  "scripts": {},
-  "keywords": [],
-  "author": "",
-  "license": "ISC",
-  "devDependencies": {
-    "@playwright/test": "^1.42.1",
-    "@types/node": "^20.12.3"
-  }
+	"name": "playwrighttesting",
+	"version": "1.0.0",
+	"description": "",
+	"main": "index.js",
+	"scripts": {
+		"test-all": "npx playwright test --reporter=list"
+	},
+	"keywords": [],
+	"author": "",
+	"license": "ISC",
+	"devDependencies": {
+		"@playwright/test": "^1.42.1",
+		"@types/node": "^20.12.3"
+	}
 }
