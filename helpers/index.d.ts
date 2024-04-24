@@ -13,6 +13,23 @@ interface MinMaxRange {
 	max: number;
 }
 
+export interface FormInputData {
+	checkboxLang: 'python' | 'javascript',
+	validationCheckboxLang: string,
+	frameworkName: 'selenium' | 'protractor',
+	skillsName: 'selenium' | 'protractor' | 'cypress',
+	programmingLangs: ProgrammingLanguages[],
+	selectedLangsValidation: string,
+	yearsOfExperience: string,
+	noteText: string,
+	fixtureFileOne: string,
+	fixtureFileTwo: string,
+	fixtureFileTextValidation: string,
+	city: string,
+	state: string,
+	zip: string,
+}
+
 export interface AddressForm {
 	testCase: string;
 	city: string;

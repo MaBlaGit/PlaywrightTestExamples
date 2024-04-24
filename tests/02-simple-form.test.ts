@@ -1,39 +1,23 @@
 import { test, expect } from '../fixtures/merge.fixture';
-import { addressFormData } from '../test-data/test-data';
-import { ProgrammingLanguages } from '../helpers/index';
+import { addressFormData, formInputsData } from '../test-data/test-data';
 
 test.describe('Basic Form tests', () => {
+
 	test(`should be able to send form with all data`, async ({ formPage }) => {
-
-		const checkboxLang = 'python';
-		const validationCheckboxLang = 'PYTHON';
-		const frameworkName = 'selenium'
-		const skillsName = 'cypress';
-		const programmingLangs: ProgrammingLanguages[] = ['Python', 'TypeScript'];
-		const selectedLangsValidation = 'python,typescript';
-		const yearsOfExperience = '5';
-		const noteText = 'This is a test note!'
-		const fixtureFileOne = 'fixture_1.png';
-		const fixtureFileTwo = 'fixture_2.png'
-		const fixtureFileTextValidation = 'fixture_1.png fixture_2.png';
-		const city = 'Warsaw';
-		const state = 'Masovian';
-		const zip = '00-283';
-
-		await formPage.selectLanguageCheckbox(checkboxLang);
-		await expect(formPage.selectedCheckboxValidationText).toHaveText(validationCheckboxLang);
-		await formPage.selectFramework(frameworkName);
-		await formPage.selectPrimarySkills(skillsName);
-		await formPage.selectLanguage(programmingLangs);
-		await formPage.enterYearsOfExperience(yearsOfExperience);
-		await expect(formPage.selectedYearsOfExperience).toHaveText(yearsOfExperience);
-		await expect(formPage.selectedLanguageValidationText).toContainText(selectedLangsValidation);
-		await formPage.enterNote(noteText);
-		await formPage.uploadSingleFile(fixtureFileOne);
-		await expect(formPage.fileNameValidationText).toHaveText(fixtureFileOne);
-		await formPage.uploadMultipleFiles(fixtureFileOne, fixtureFileTwo);
-		await expect(formPage.fileNamesValidationText).toContainText(fixtureFileTextValidation);
-		await formPage.fillFormWitValidations(city, state, zip, true);
+		await formPage.selectLanguageCheckbox(formInputsData.checkboxLang);
+		await expect(formPage.selectedCheckboxValidationText).toHaveText(formInputsData.validationCheckboxLang);
+		await formPage.selectFramework(formInputsData.frameworkName);
+		await formPage.selectPrimarySkills(formInputsData.skillsName);
+		await formPage.selectLanguage(formInputsData.programmingLangs);
+		await formPage.enterYearsOfExperience(formInputsData.yearsOfExperience);
+		await expect(formPage.selectedYearsOfExperience).toHaveText(formInputsData.yearsOfExperience);
+		await expect(formPage.selectedLanguageValidationText).toContainText(formInputsData.selectedLangsValidation);
+		await formPage.enterNote(formInputsData.noteText);
+		await formPage.uploadSingleFile(formInputsData.fixtureFileOne);
+		await expect(formPage.fileNameValidationText).toHaveText(formInputsData.fixtureFileOne);
+		await formPage.uploadMultipleFiles(formInputsData.fixtureFileOne, formInputsData.fixtureFileTwo);
+		await expect(formPage.fileNamesValidationText).toContainText(formInputsData.fixtureFileTextValidation);
+		await formPage.fillFormWitValidations(formInputsData.city, formInputsData.state, formInputsData.zip, true);
 	});
 
 	for(let address of addressFormData) {

@@ -1,4 +1,4 @@
-import { Alert, Prompt, MinMaxRange, AddressForm } from '../helpers/index';
+import { Alert, AddressForm, FormInputData, Prompt, MinMaxRange } from '../helpers/index';
 
 export const minMaxAlert: Alert = {
 	state: 'accept',
@@ -24,6 +24,23 @@ export const minSecMaxSec: MinMaxRange = {
 	min: 1,
 	max: 3,
 };
+
+export const formInputsData: FormInputData = {
+	checkboxLang: 'python',
+	validationCheckboxLang: 'PYTHON',
+	frameworkName: 'selenium',
+	skillsName: 'cypress',
+	programmingLangs: ['Python', 'TypeScript'],
+	selectedLangsValidation: 'python,typescript',
+	yearsOfExperience: '5',
+	noteText: 'This is a test note!',
+	fixtureFileOne: 'fixture_1.png',
+	fixtureFileTwo: 'fixture_2.png',
+	fixtureFileTextValidation: 'fixture_1.png fixture_2.png',
+	city: 'Warsaw',
+	state: 'Masovian',
+	zip: '00-283',
+}
 
 export const addressFormData: AddressForm[] = [
 	{
