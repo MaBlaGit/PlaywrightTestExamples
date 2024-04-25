@@ -11,9 +11,9 @@ jobs:
       image: mcr.microsoft.com/playwright:v1.42.1-jammy
     steps:
       - name: Checkout
-        uses: actions/checkout@v2
+        uses: actions/checkout@v4
       - name: Setup Node.js
-        uses: actions/setup-node@v3
+        uses: actions/setup-node@v4
         with:
           node-version: 18
       - name: Install dependencies
@@ -21,7 +21,7 @@ jobs:
       - name: Run Playwright Test Examples
         run: npm run test-all
       - name: Store tests artifacts
-        uses: actions/upload-artifact@v3
+        uses: actions/upload-artifact@v4
         if: failure()
         with:
           name: playwright-test-examples
