@@ -4,27 +4,27 @@ on:
         - main
     workflow_dispatch:
   
-  jobs:  
-    playwright-test-examples:
-      runs-on: ubuntu-latest
-      container:
-        image: mcr.microsoft.com/playwright:v1.44.0-next-jammy
-      steps:
-        - name: Checkout
-          uses: actions/checkout@v2
-        - name: Setup Node.js
-          uses: actions/setup-node@v3
-          with:
-            node-version: 18
-        - name: Install dependencies
-          run: npm ci
-        - name: Run Playwright Test Examples
-          run: npm run test-all
-        - name: Store tests artifacts
-          uses: actions/upload-artifact@v3
-          if: failure()
-          with:
-            name: playwright-test-examples
-            path: playwright-report/
-            retention-days: 5
+jobs:  
+  playwright-test-examples:
+    runs-on: ubuntu-latest
+    container:
+      image: mcr.microsoft.com/playwright:v1.44.0-next-jammy
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v2
+      - name: Setup Node.js
+        uses: actions/setup-node@v3
+        with:
+          node-version: 18
+      - name: Install dependencies
+        run: npm ci
+      - name: Run Playwright Test Examples
+        run: npm run test-all
+      - name: Store tests artifacts
+        uses: actions/upload-artifact@v3
+        if: failure()
+        with:
+          name: playwright-test-examples
+          path: playwright-report/
+          retention-days: 5
   
