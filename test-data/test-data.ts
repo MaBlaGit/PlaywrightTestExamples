@@ -1,12 +1,15 @@
 import { Alert, AddressForm, FormInputData, Prompt, MinMaxRange } from '../helpers/index';
 
+export const ranges: {min: number, max: number}[] = [
+	{ min: 1, max: 2 },
+	{ min: 1, max: 3 },
+	{ min: 2, max: 6 },
+]
+
+
 export const minMaxAlert: Alert = {
 	state: 'accept',
-	ranges: [
-		{ min: 1, max: 1 },
-		{ min: 1, max: 2 },
-		{ min: 2, max: 4 },
-	],
+	ranges,
 };
 
 export const minMaxPrompt: Array<Prompt> = [

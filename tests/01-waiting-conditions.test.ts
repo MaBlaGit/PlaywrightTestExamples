@@ -3,11 +3,17 @@ import {
 	minMaxAlert,
 	minMaxPrompt,
 	minSecMaxSec,
+	ranges,
 } from '../test-data/test-data';
 
 test.describe('Testing different types of waits', () => {
 	const playgroundHeader = 'The Playground';
 	const waitingConditionsPartialUrl = '/expected_conditions.html';
+
+	test('should be 8 sections on the page', async ({ waitingConditionsPage }) => {
+		const numberOfSections = 8;
+		await expect(waitingConditionsPage.pageSections).toHaveCount(numberOfSections);
+	});
 
 	test('should be able navigate to Waiting Conditions page', async ({
 		playgroundPage,
@@ -87,4 +93,13 @@ test.describe('Testing different types of waits', () => {
 			spinnerGoneMessage
 		);
 	});
+
+	for(const range of ranges) {
+		const waitTime = range.max - range.min;
+		test(`should be able to wait ~${waitTime} sec for button to be enabled`, async ({ waitingConditionsPage }) => {
+			await waitingConditionsPage.manageMinMaxWait(range.min, range.max);
+			await waitingConditionsPage.clickOnTriggerDisabledButton();
+			await expect(waitingConditionsPage.enabledButton).toBeEnabled();
+		});
+	}
 });
