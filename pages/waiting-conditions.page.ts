@@ -8,6 +8,7 @@ export class WaitingConditionsPage extends BasePage {
 		super(page);
 	}
 
+	pageSections = this.page.locator('.card-header');
 	showAlertButton = this.page.getByRole('button', { name: 'Show Alert' });
 	showPromptButton = this.page.getByRole('button', { name: 'Show Prompt' });
 	alertHandledText = this.page.locator('#alert_handled_badge');
@@ -20,6 +21,8 @@ export class WaitingConditionsPage extends BasePage {
 	disappearanceButton = this.page.locator('#invisibility_trigger');
 	spinnerVisible = this.page.locator('#invisibility_target');
 	spinnerInvisible = this.page.locator('#spinner_gone');
+	triggerDisabledButton = this.page.locator('#enabled_trigger');
+	enabledButton = this.page.locator('button#enabled_target');
 
 	async clickOnShowAlertButton(): Promise<void> {
 		await this.showAlertButton.click();
@@ -42,5 +45,9 @@ export class WaitingConditionsPage extends BasePage {
 
 	async clickDisappearanceButton(): Promise<void> {
 		await this.disappearanceButton.click();
+	}
+
+	async clickOnTriggerDisabledButton():Promise<void> {
+		await this.triggerDisabledButton.click();
 	}
 }
