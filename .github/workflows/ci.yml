@@ -57,7 +57,7 @@ jobs:
           path: downloaded-merged-reports-as-blob
 
       - name: Merge the blobs into one single HTML Report
-        run: npx playwright merge-reports ./downloaded-merged-reports-as-blob
+        run: npx playwright merge-reports --reporter html ./downloaded-merged-reports-as-blob
     
       - name: /[OPTIONAL] Upload full html report to artifacts for history
         if: always()
