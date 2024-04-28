@@ -21,3 +21,7 @@ If Playwright complains about problem with the browser, additionally run:
 ### How to run:
 
 ```npm run test-all```
+
+### Reporter
+
+Test results are publish on the GitHub Actions.
