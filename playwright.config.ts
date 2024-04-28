@@ -7,12 +7,13 @@ export default defineConfig({
 	testDir: './tests',
 	fullyParallel: true,
 	forbidOnly: !!process.env.CI,
-	retries: process.env.CI ? 2 : 0,
+	retries: process.env.CI ? 2 : 1,
 	workers: process.env.CI ? 2 : undefined,
-	reporter: 'html',
+	reporter: process.env.CI ? 'blob' : 'html',
 	use: {
 		baseURL: 'https://play1.automationcamp.ir',
-		trace: 'on-first-retry',
+		screenshot: 'only-on-failure',
+		trace: 'retain-on-failure',
 	},
 	projects: [
 		{
