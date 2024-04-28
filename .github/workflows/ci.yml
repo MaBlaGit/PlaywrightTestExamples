@@ -27,7 +27,7 @@ jobs:
       run: npx playwright test
     - name: Upload blob report to the Artifacts
       if: always()
-      uses: actions/upload-artifact@v4
+      uses: actions/upload-artifact@v3
       with:
         name: playwright-test-examples
         path: blob-report
@@ -53,7 +53,7 @@ jobs:
       - name: Download blob reports from GitHub Actions Artifacts
         uses: actions/download-artifact@v3
         with:
-          name: merged-reports-as-blob 
+          name: playwright-test-examples 
           path: downloaded-merged-reports-as-blob
 
       - name: Merge the blobs into one single HTML Report
