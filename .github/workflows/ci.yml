@@ -12,6 +12,10 @@ on:
 jobs:  
   playwright-test-examples:
     runs-on: ubuntu-latest
+    strategy:
+      fail-fast: false
+      matrix:
+        shard: [1/2, 2/2]
     container:
       image: mcr.microsoft.com/playwright:v1.42.1-jammy
     steps:
@@ -24,11 +28,52 @@ jobs:
       - name: Install dependencies
         run: npm ci
       - name: Run Playwright Test Examples
-        run: npm run test-all
-      - name: Store tests artifacts
+        run: npx playwright test --reporter=line --shard=${{ matrix.shard }}
+      - name: Upload blob report to the Artifacts
+        if: always()
         uses: actions/upload-artifact@v4
-        if: failure()
         with:
           name: playwright-test-examples
           path: playwright-report/
           retention-days: 5
+
+  merge-reports-and-upload:
+    if: always()
+    needs: [playwright-test-examples]
+    runs-on: ubuntu-latest
+    outputs:
+      timestamp: ${{ steps.timestampid.outputs.timestamp }}
+    steps:
+      - name: Set a timestamp
+        id: timestampid
+        run: echo "timestamp=$(date --utc +%Y%m%d_%H%M%SZ)" >> "GITHUB_OUTPUT"
+      - uses: actions/checkout@v3
+      - uses: actions/setup-node@v3
+        with:
+            node-version: 18
+      - name: Install dependencies
+        run: npm ci
+    
+      - name: Download blob reports from GitHub Actions Artifacts
+        uses: actions/download-artifact@v3
+        with:
+          name: merged-reports-as-blob 
+          path: downloaded-merged-reports-as-blob
+
+      - name: Merge the blobs into one single HTML Report
+        run: npx playwright merge-reports --reporter html ./downloaded-merged-reports-as-blob
+    
+      - name: /[OPTIONAL] Upload full html report to artifacts for history
+        if: always()
+        uses: actions/upload-artifact@v3
+        with:
+          name: playwright-report-${{ steps.timestampid.outputs.timestamp }}
+          path: playwright-report
+          retention-days: 5
+    
+      - name: Push the new files to github pages
+        uses: peaceiris/actions-gh-pages@v3
+        with:
+          github_token: ${{ secrets.GITHUB_TOKEN }}
+          publish_dir: ./playwright-report
+          destination_dir: ${{ steps.timestampid.outputs.timestamp }}
