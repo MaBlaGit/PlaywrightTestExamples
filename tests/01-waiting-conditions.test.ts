@@ -102,4 +102,13 @@ test.describe('Testing different types of waits', () => {
 			await expect(waitingConditionsPage.enabledButton).toBeEnabled();
 		});
 	}
+
+	for(const range of ranges) {
+		const buttonName = 'Submit';
+		const waitTime = range.max - range.min;
+		test(`should button be enabled after ~${waitTime} sec`, async({ waitingConditionsPage }) => {
+			await waitingConditionsPage.clickOnSpecificValuesButton();
+			await expect(waitingConditionsPage.submitButton).toHaveText(buttonName);
+		});
+	}
 });
