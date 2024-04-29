@@ -24,7 +24,7 @@ jobs:
     - name: Install dependencies
       run: npm ci  
     - name: Run Playwright Test Examples
-      run: npx playwright test --reporter=list
+      run: npx playwright test
     - name: Upload blob report to the Artifacts
       if: always()
       uses: actions/upload-artifact@v4
