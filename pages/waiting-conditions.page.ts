@@ -1,4 +1,4 @@
-import { Page } from '@playwright/test';
+import { Page, FrameLocator, Locator } from '@playwright/test';
 import { BasePage } from './base.page';
 
 export class WaitingConditionsPage extends BasePage {
@@ -23,6 +23,12 @@ export class WaitingConditionsPage extends BasePage {
 	spinnerInvisible = this.page.locator('#spinner_gone');
 	triggerDisabledButton = this.page.locator('#enabled_trigger');
 	enabledButton = this.page.locator('button#enabled_target');
+	specificValuesButton = this.page.locator('button#text_value_trigger');
+	submitButton = this.page.locator('button#wait_for_text');
+	// iframe locators
+	iFrameTriggerButton = this.page.locator('#wait_for_frame');
+	iFrameComponent = this.page.frameLocator('[name="frm"]');
+	iframeButton = this.page.locator('button#inner_button');
 
 	async clickOnShowAlertButton(): Promise<void> {
 		await this.showAlertButton.click();
@@ -49,5 +55,29 @@ export class WaitingConditionsPage extends BasePage {
 
 	async clickOnTriggerDisabledButton():Promise<void> {
 		await this.triggerDisabledButton.click();
+	}
+
+	async clickOnSpecificValuesButton(): Promise<void> {
+		await this.specificValuesButton.click();
+	}
+
+	async clickOnIFrameButton(): Promise<void> {
+		await this.iFrameTriggerButton.click();
+	}
+
+	// iframe actions
+	async switchToIFrameAndReturn(): Promise<FrameLocator> {
+		const frame = this.iFrameComponent;
+		return frame;
+	}
+
+	async clickOnIFrameInnerButton(): Promise<void> {
+		const frame = await this.switchToIFrameAndReturn();
+		await frame.getByRole('button', {name: 'Inner Button'}).click();
+	}
+
+	async returnClickedButtonName(): Promise<Locator> {
+		const frame = await this.switchToIFrameAndReturn();
+		return frame.getByRole('button', {name: 'Clicked'});
 	}
 }
