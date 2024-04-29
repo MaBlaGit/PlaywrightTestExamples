@@ -1,4 +1,5 @@
 import { test, expect } from '../fixtures/merge.fixture';
+import { WaitingConditionsPage } from '../pages/waiting-conditions.page';
 import {
 	minMaxAlert,
 	minMaxPrompt,
@@ -109,6 +110,17 @@ test.describe('Testing different types of waits', () => {
 		test(`should button be enabled after ~${waitTime} sec`, async({ waitingConditionsPage }) => {
 			await waitingConditionsPage.clickOnSpecificValuesButton();
 			await expect(waitingConditionsPage.submitButton).toHaveText(buttonName);
+		});
+	}
+
+	for(const range of ranges) {
+		const waitTime = range.max - range.min;
+		test(`should be able to wait ~${waitTime} sec for iframe and interact with it`, async({ waitingConditionsPage }) => {
+			const buttonNameAfterClick = 'Clicked';
+			await waitingConditionsPage.clickOnIFrameButton();
+			await waitingConditionsPage.clickOnIFrameInnerButton();
+			const clickedIFrameButtonName = await waitingConditionsPage.returnClickedButtonName();
+			expect(clickedIFrameButtonName).toHaveText(buttonNameAfterClick);
 		});
 	}
 });
