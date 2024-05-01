@@ -16,18 +16,23 @@ test.describe('Testing different types of waits', () => {
 		await expect(waitingConditionsPage.pageSections).toHaveCount(numberOfSections);
 	});
 
-	test('should be able navigate to Waiting Conditions page', async ({
+	test('should be able navigate to "Waiting Conditions page"', async ({
 		playgroundPage,
 	}) => {
 		await expect(playgroundPage.playgroundPageHeader).toHaveText(
 			playgroundHeader
 		);
-		const waitingConditionsPage =
-			await playgroundPage.selectExpectedConditions();
-		expect(waitingConditionsPage.currentPage.url()).toContain(
-			waitingConditionsPartialUrl
-		);
+		const waitingConditionsPage = await playgroundPage.selectExpectedConditions();
+		expect(waitingConditionsPage.currentPage.url()).toContain(waitingConditionsPage.url);
 	});
+
+	test('should be able to navigate to "Advanced UI feature page"', async({ playgroundPage }) => {
+		await expect(playgroundPage.playgroundPageHeader).toHaveText(
+			playgroundHeader
+		);
+		const uiFeaturePage = await playgroundPage.selectSpecialUIFeature();
+		expect(uiFeaturePage.currentPage.url()).toContain(uiFeaturePage.url);
+	})
 
 	for (const second of Object.values(minMaxAlert.ranges)) {
 		test(`should be able to handle dialog between ${second.min} - ${second.max} sec`, async ({
