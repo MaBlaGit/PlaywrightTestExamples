@@ -25,12 +25,20 @@ export class UIFeaturePage extends BasePage {
         return asterisk.repeat(rating.length); 
     }
 
-    async enterStarsIntoRatingInput(): Promise<void> {
+    async enterStarsIntoRatingInput(starsByUser?:string): Promise<void> {
         const asterisks = await this.returnRatingStars();
-        await this.ratingInput.fill(asterisks);
+        if(starsByUser) {
+            await this.ratingInput.fill(starsByUser);    
+        } else {
+            await this.ratingInput.fill(asterisks);
+        }
     }
 
     async clickOnCheckRatingButton(): Promise<void> {
         await this.checkRatingButton.click();
+    }
+
+    async clearRatingInput(): Promise<void> {
+        await this.ratingInput.clear();
     }
 }
