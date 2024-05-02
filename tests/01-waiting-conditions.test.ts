@@ -1,11 +1,10 @@
-import { test, expect } from '../fixtures/merge.fixture';
-import { WaitingConditionsPage } from '../pages/waiting-conditions.page';
+import { test, expect } from '@root/fixtures/merge.fixture';
 import {
 	minMaxAlert,
 	minMaxPrompt,
 	minSecMaxSec,
 	ranges,
-} from '../test-data/test-data';
+} from '@root/test-data/test-data';
 
 test.describe('Testing different types of waits', () => {
 	const playgroundHeader = 'The Playground';
@@ -35,7 +34,8 @@ test.describe('Testing different types of waits', () => {
 	})
 
 	for (const second of Object.values(minMaxAlert.ranges)) {
-		test(`should be able to handle dialog between ${second.min} - ${second.max} sec`, async ({
+		const waitTime = second.max - second.min;
+		test(`should be able to handle dialog in ~${waitTime} sec`, async ({
 			waitingConditionsPage,
 		}) => {
 			const alertAccepted = 'Alert handled';
@@ -50,7 +50,8 @@ test.describe('Testing different types of waits', () => {
 	}
 
 	for (const { state, range } of minMaxPrompt) {
-		test(`should be able to handle prompt when "${state}" in range ${range.min} - ${range.max} sec`, async ({
+		const waitTime = range.max - range.min;
+		test(`should be able to handle prompt in ~${waitTime} sec when "${state}"`, async ({
 			waitingConditionsPage,
 		}) => {
 			const promptAccepted = 'OK';

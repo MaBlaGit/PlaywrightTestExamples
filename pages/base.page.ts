@@ -23,6 +23,6 @@ export class BasePage {
 		locator: Locator,
 		state: 'attached' | 'detached' | 'hidden' | 'visible'
 	): Promise<void> {
-		await locator.waitFor({ state: state });
+		await locator.waitFor({ state });
 	}
 }

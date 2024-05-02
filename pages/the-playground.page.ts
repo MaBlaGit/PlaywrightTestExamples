@@ -1,7 +1,7 @@
 import { Page } from '@playwright/test';
-import { BasePage } from './base.page';
-import { WaitingConditionsPage } from './waiting-conditions.page';
-import { UIFeaturePage } from './ui-feature.page';
+import { BasePage } from '@root/pages/base.page';
+import { WaitingConditionsPage } from '@root/pages/waiting-conditions.page';
+import { UIFeaturePage } from '@root/pages/ui-feature.page';
 
 export class PlaygroundPage extends BasePage {
 	url = '/';

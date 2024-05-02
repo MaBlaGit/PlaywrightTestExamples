@@ -1,4 +1,4 @@
-import { test, expect } from '../fixtures/merge.fixture';
+import { test, expect } from '@root/fixtures/merge.fixture';
 
 test.describe('UI feature test', () => {
     const successMessage = 'Well done!';
