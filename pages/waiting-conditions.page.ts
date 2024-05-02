@@ -1,5 +1,5 @@
 import { Page, FrameLocator, Locator } from '@playwright/test';
-import { BasePage } from './base.page';
+import { BasePage } from '@root/pages/base.page';
 
 export class WaitingConditionsPage extends BasePage {
 	url = '/expected_conditions.html';

@@ -1,11 +1,10 @@
-import { test, expect } from '../fixtures/merge.fixture';
-import { WaitingConditionsPage } from '../pages/waiting-conditions.page';
+import { test, expect } from '@root/fixtures/merge.fixture';
 import {
 	minMaxAlert,
 	minMaxPrompt,
 	minSecMaxSec,
 	ranges,
-} from '../test-data/test-data';
+} from '@root/test-data/test-data';
 
 test.describe('Testing different types of waits', () => {
 	const playgroundHeader = 'The Playground';

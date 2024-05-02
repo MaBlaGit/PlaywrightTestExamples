@@ -1,4 +1,4 @@
-import { Alert, AddressForm, FormInputData, Prompt, MinMaxRange } from '../helpers/index';
+import { Alert, AddressForm, FormInputData, Prompt, MinMaxRange } from '@root/helpers/index';
 
 export const ranges: {min: number, max: number}[] = [
 	{ min: 1, max: 2 },

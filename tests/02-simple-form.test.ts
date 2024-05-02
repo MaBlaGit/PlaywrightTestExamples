@@ -1,5 +1,5 @@
-import { test, expect } from '../fixtures/merge.fixture';
-import { addressFormData, formInputsData } from '../test-data/test-data';
+import { test, expect } from '@root/fixtures/merge.fixture';
+import { addressFormData, formInputsData } from '@root/test-data/test-data';
 
 test.describe('Basic Form tests', () => {
 

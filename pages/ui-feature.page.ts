@@ -1,5 +1,5 @@
 import { Page } from '@playwright/test';
-import { BasePage } from './base.page';
+import { BasePage } from '@root/pages/base.page';
 
 export class UIFeaturePage extends BasePage {
     url = '/advanced.html';

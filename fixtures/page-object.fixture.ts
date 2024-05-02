@@ -1,8 +1,8 @@
 import { test as baseTest } from '@playwright/test';
-import { PlaygroundPage } from '../pages/the-playground.page';
-import { FormPage } from '../pages/form.page';
-import { WaitingConditionsPage } from '../pages/waiting-conditions.page';
-import { UIFeaturePage } from '../pages/ui-feature.page';
+import { PlaygroundPage } from '@root/pages/the-playground.page';
+import { FormPage } from '@root/pages/form.page';
+import { WaitingConditionsPage } from '@root/pages/waiting-conditions.page';
+import { UIFeaturePage } from '@root/pages/ui-feature.page';
 
 interface Pages {
 	playgroundPage: PlaygroundPage;

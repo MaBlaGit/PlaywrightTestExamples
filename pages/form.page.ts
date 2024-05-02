@@ -1,6 +1,6 @@
 import { Page, expect } from '@playwright/test';
-import { BasePage } from '../pages/base.page';
-import { ProgrammingLanguages, ValidationMessage } from '../helpers/index';
+import { BasePage } from '@root/pages/base.page';
+import { ProgrammingLanguages, ValidationMessage } from '@root/helpers/index';
 
 export class FormPage extends BasePage {
 	url = '/forms.html';
