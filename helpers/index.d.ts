@@ -48,3 +48,14 @@ export interface AddressForm {
   }
   
   export type ProgrammingLanguages = 'Java' | 'Python' | 'JavaScript' | 'TypeScript';
+
+  export interface Credentials {
+	valid: UsernameAndPassword,
+	invalid: UsernameAndPassword[],
+  }
+
+  interface UsernameAndPassword {
+	username: string,
+	password: string
+  }
+

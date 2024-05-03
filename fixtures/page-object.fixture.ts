@@ -1,21 +1,41 @@
 import { test as baseTest } from '@playwright/test';
-import { PlaygroundPage } from '@root/pages/the-playground.page';
 import { FormPage } from '@root/pages/form.page';
-import { WaitingConditionsPage } from '@root/pages/waiting-conditions.page';
+import { LoginPage } from '@root/pages/login.page';
+import { PlaygroundPage } from '@root/pages/the-playground.page';
 import { UIFeaturePage } from '@root/pages/ui-feature.page';
+import { WaitingConditionsPage } from '@root/pages/waiting-conditions.page';
 
 interface Pages {
-	playgroundPage: PlaygroundPage;
-	waitingConditionsPage: WaitingConditionsPage;
 	formPage: FormPage;
+	loginPage: LoginPage;
+	playgroundPage: PlaygroundPage;
 	uiFeaturePage: UIFeaturePage;
+	waitingConditionsPage: WaitingConditionsPage;
 }
 
 export const pageObjectTest = baseTest.extend<Pages>({
+	formPage: async ({ page }, use) => {
+		const formPage = new FormPage(page);
+		await formPage.goto();
+		use(formPage);
+	},
+	
+	loginPage: async({ page }, use) => {
+		const loginPage = new LoginPage(page);
+		await loginPage.goto();
+		use(loginPage);
+	},
+
 	playgroundPage: async ({ page }, use) => {
 		const playgroundPage = new PlaygroundPage(page);
 		await playgroundPage.goto();
 		use(playgroundPage);
+	},
+
+	uiFeaturePage: async({ page }, use) => {
+		const uiFeaturePage = new UIFeaturePage(page);
+		await uiFeaturePage.goto();
+		use(uiFeaturePage);
 	},
 
 	waitingConditionsPage: async ({ page }, use) => {
@@ -23,16 +43,4 @@ export const pageObjectTest = baseTest.extend<Pages>({
 		await waitingConditionsPage.goto();
 		use(waitingConditionsPage);
 	},
-
-	formPage: async ({ page }, use) => {
-		const formPage = new FormPage(page);
-		await formPage.goto();
-		use(formPage);
-	},
-
-	uiFeaturePage: async({ page }, use) => {
-		const uiFeaturePage = new UIFeaturePage(page);
-		await uiFeaturePage.goto();
-		use(uiFeaturePage);
-	}
 });
