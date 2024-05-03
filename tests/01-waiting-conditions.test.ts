@@ -15,7 +15,7 @@ test.describe('Testing different types of waits', () => {
 		await expect(waitingConditionsPage.pageSections).toHaveCount(numberOfSections);
 	});
 
-	test('should be able navigate to "Waiting Conditions page"', async ({
+	test('should be able navigate to "Waiting Conditions" page', async ({
 		playgroundPage,
 	}) => {
 		await expect(playgroundPage.playgroundPageHeader).toHaveText(
@@ -25,13 +25,21 @@ test.describe('Testing different types of waits', () => {
 		expect(waitingConditionsPage.currentPage.url()).toContain(waitingConditionsPage.url);
 	});
 
-	test('should be able to navigate to "Advanced UI feature page"', async({ playgroundPage }) => {
+	test('should be able to navigate to "Advanced UI feature" page', async({ playgroundPage }) => {
 		await expect(playgroundPage.playgroundPageHeader).toHaveText(
 			playgroundHeader
 		);
 		const uiFeaturePage = await playgroundPage.selectSpecialUIFeature();
 		expect(uiFeaturePage.currentPage.url()).toContain(uiFeaturePage.url);
-	})
+	});
+
+	test('should be able to navigate to "Sample Pages" page', async({ playgroundPage }) => {
+		await expect(playgroundPage.playgroundPageHeader).toHaveText(
+			playgroundHeader
+		);
+		const loginPage = await playgroundPage.selectSamplePages();
+		expect(loginPage.currentPage.url()).toContain(loginPage.url);
+	});
 
 	for (const second of Object.values(minMaxAlert.ranges)) {
 		const waitTime = second.max - second.min;
