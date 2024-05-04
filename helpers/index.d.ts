@@ -59,3 +59,7 @@ export interface AddressForm {
 	password: string
   }
 
+export type Size = 'small' | 'medium' | 'large';
+export type Flavour = 'Cheese' | 'Pepperoni' | 'Supreme' | 'Veggie Delight';
+export type Sauces = 'Marinara' | 'Buffalo' | 'Barbeque';
+export type Toppings = 'Onions' | 'Green Olive' | 'Tomatoes';
