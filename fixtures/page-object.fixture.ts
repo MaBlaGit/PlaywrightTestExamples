@@ -1,8 +1,9 @@
-import { test as baseTest, expect } from '@playwright/test';
+import { test as baseTest } from '@playwright/test';
 import { FormPage } from '@root/pages/form.page';
 import { LoginPage } from '@root/pages/login.page';
 import { OrderSubmitPage } from '@root/pages/order-submit.page';
 import { PlaygroundPage } from '@root/pages/the-playground.page';
+import { PopupWindowsPage } from '@root/pages/popup-windows.page';
 import { UIFeaturePage } from '@root/pages/ui-feature.page';
 import { WaitingConditionsPage } from '@root/pages/waiting-conditions.page';
 import { credentials } from '@root/helpers/credentials.helper';
@@ -12,6 +13,7 @@ interface Pages {
 	loginPage: LoginPage;
 	orderSubmitPage: OrderSubmitPage;
 	playgroundPage: PlaygroundPage;
+	popupWindowsPage: PopupWindowsPage;
 	uiFeaturePage: UIFeaturePage;
 	waitingConditionsPage: WaitingConditionsPage;
 }
@@ -33,6 +35,12 @@ export const pageObjectTest = baseTest.extend<Pages>({
 		const playgroundPage = new PlaygroundPage(page);
 		await playgroundPage.goto();
 		use(playgroundPage);
+	},
+
+	popupWindowsPage: async({ page }, use) => {
+		const popupWindowsPage = new PopupWindowsPage(page);
+		await popupWindowsPage.goto();;
+		use(popupWindowsPage);
 	},
 
 	uiFeaturePage: async({ page }, use) => {
