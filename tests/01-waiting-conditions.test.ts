@@ -25,6 +25,14 @@ test.describe('Testing different types of waits', () => {
 		expect(waitingConditionsPage.currentPage.url()).toContain(waitingConditionsPage.url);
 	});
 
+	test('should be able navigate to "Popup Windows" page', async({ playgroundPage }) => {
+		await expect(playgroundPage.playgroundPageHeader).toHaveText(
+			playgroundHeader
+		);
+		const popupWindowsPage = await playgroundPage.selectPopupWindowsPage();
+		expect(popupWindowsPage.currentPage.url()).toContain(popupWindowsPage.url);
+	});
+
 	test('should be able to navigate to "Advanced UI feature" page', async({ playgroundPage }) => {
 		await expect(playgroundPage.playgroundPageHeader).toHaveText(
 			playgroundHeader
