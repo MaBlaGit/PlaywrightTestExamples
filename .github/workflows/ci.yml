@@ -10,7 +10,7 @@ on:
   workflow_dispatch:
 
 jobs:  
-  playwright-test-examples:
+  playwright-desktop-test-examples:
     runs-on: ubuntu-latest
     strategy:
       fail-fast: false
@@ -24,7 +24,7 @@ jobs:
     - name: Install dependencies
       run: npm ci  
     - name: Run Playwright Test Examples
-      run: npx playwright test
+      run: npx playwright test --project=desktop
     - name: Upload blob report to the Artifacts
       if: always()
       uses: actions/upload-artifact@v4
@@ -35,7 +35,7 @@ jobs:
 
   merge-reports-and-upload:
     if: always()
-    needs: [playwright-test-examples]
+    needs: [playwright-desktop-test-examples]
     runs-on: ubuntu-latest
     outputs:
       timestamp: ${{ steps.timestampid.outputs.timestamp }}
