@@ -78,38 +78,14 @@ jobs:
         with:
           name: playwright-test-examples-desktop-${{ github.run_id }}
           path: downloaded-reports/desktop
-          merge-multiple: true
       - name: Download mobile blob report from GitHub Actions Artifacts
         uses: actions/download-artifact@v4
         with:
           name: playwright-test-examples-mobile-${{ github.run_id }}
           path: downloaded-reports/mobile
-          merge-multiple: true
-
-      - name: List contents of downloaded desktop report directory
-        run: ls -R downloaded-reports/desktop
-
-      - name: List contents of downloaded mobile report directory
-        run: ls -R downloaded-reports/mobile
-
-      - name: Extract desktop blob report
-        run: |
-          mkdir -p extracted-reports/desktop
-          unzip downloaded-reports/desktop/*.zip -d extracted-reports/desktop
-
-      - name: Extract mobile blob report
-        run: |
-          mkdir -p extracted-reports/mobile
-          unzip downloaded-reports/mobile/*.zip -d extracted-reports/mobile
-
-      - name: List contents of extracted desktop report directory
-        run: ls -R extracted-reports/desktop
-
-      - name: List contents of extracted mobile report directory
-        run: ls -R extracted-reports/mobile
 
       - name: Merge the blobs into one single HTML Report
-        run: npx playwright merge-reports --reporter html extracted-reports/desktop extracted-reports/mobile
+        run: npx playwright merge-reports --reporter html downloaded-reports/desktop blob-report downloaded-reports/mobile blob-report
     
       - name: Upload full HTML report to artifacts for history
         if: always()
