@@ -22,6 +22,7 @@ export default defineConfig({
 		},
 		{
 			name: 'mobile',
+			grepInvert: /@fix-on-mobile/,
 			use: { ...devices['iPhone SE'] },
 		},
 	],

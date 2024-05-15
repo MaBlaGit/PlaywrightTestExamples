@@ -33,9 +33,32 @@ jobs:
         path: blob-report
         retention-days: 5
 
+  playwright-mobile-test-examples:
+    runs-on: ubuntu-latest
+    strategy:
+      fail-fast: false
+    container:
+      image: mcr.microsoft.com/playwright:v1.42.1-jammy
+    steps:
+    - uses: actions/checkout@v4
+    - uses: actions/setup-node@v4
+      with:
+        node-version: 18
+    - name: Install dependencies
+      run: npm ci  
+    - name: Run Playwright Test Examples
+      run: npx playwright test --project=mobile
+    - name: Upload blob report to the Artifacts
+      if: always()
+      uses: actions/upload-artifact@v4
+      with:
+        name: playwright-test-examples
+        path: blob-report
+        retention-days: 5
+
   merge-reports-and-upload:
     if: always()
-    needs: [playwright-desktop-test-examples]
+    needs: [playwright-desktop-test-examples, playwright-mobile-test-examples]
     runs-on: ubuntu-latest
     outputs:
       timestamp: ${{ steps.timestampid.outputs.timestamp }}

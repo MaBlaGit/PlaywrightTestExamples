@@ -11,7 +11,7 @@ export class FormPage extends BasePage {
 
 	formHeader = this.page.getByText('Basic Form Controls');
 	yearsOfExperienceInput = this.page.locator('#exp');
-	selectedYearsOfExperience = this.page.locator('#exp_help');
+	selectedYearsOfExperience = this.page.locator('span#exp_help');
 	pythonCheckbox = this.page.locator('#check_python+label');
 	javaScriptCheckbox = this.page.locator('#check_javascript');
 	selectedCheckboxValidationText = this.page.locator('#check_validate');
