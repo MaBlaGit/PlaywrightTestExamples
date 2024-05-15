@@ -29,7 +29,7 @@ jobs:
       if: always()
       uses: actions/upload-artifact@v4
       with:
-        name: playwright-test-examples
+        name: playwright-test-examples-desktop-${{ github.run_id }}
         path: blob-report
         retention-days: 5
 
@@ -52,7 +52,7 @@ jobs:
       if: always()
       uses: actions/upload-artifact@v4
       with:
-        name: playwright-test-examples
+        name: playwright-test-examples-mobile-${{ github.run_id }}
         path: blob-report
         retention-days: 5
 
@@ -65,7 +65,7 @@ jobs:
     steps:
       - name: Set a timestamp
         id: timestampid
-        run: echo "timestamp=$(date --utc +%Y%m%d_%H%M%SZ)" >> "$GITHUB_OUTPUT" 
+        run: echo "timestamp=$(date --utc +%Y%m%d_%H%M%SZ)" >> "$GITHUB_OUTPUT"
       - uses: actions/checkout@v4
       - uses: actions/setup-node@v4
         with:
@@ -76,7 +76,12 @@ jobs:
       - name: Download blob reports from GitHub Actions Artifacts
         uses: actions/download-artifact@v4
         with:
-          name: playwright-test-examples 
+          name: playwright-test-examples-desktop-${{ github.run_id }}
+          path: downloaded-merged-reports-as-blob
+      - name: Download blob reports from GitHub Actions Artifacts
+        uses: actions/download-artifact@v4
+        with:
+          name: playwright-test-examples-mobile-${{ github.run_id }}
           path: downloaded-merged-reports-as-blob
 
       - name: Merge the blobs into one single HTML Report
@@ -99,3 +104,4 @@ jobs:
 
       - name: Write URL in summary
         run: echo "### Test results (link available after 20 secs) - https://${{ github.repository_owner }}.github.io/PlaywrightTestExamples/${{ steps.timestampid.outputs.timestamp }}/index.html" >> $GITHUB_STEP_SUMMARY
+        
