@@ -92,15 +92,15 @@ jobs:
       - name: List contents of downloaded mobile report directory
         run: ls -R downloaded-reports/mobile
 
-      - name: Extract desktop report
+      - name: Extract desktop blob report
         run: |
           mkdir -p extracted-reports/desktop
-          unzip downloaded-reports/desktop/report.zip -d extracted-reports/desktop
+          unzip downloaded-reports/desktop/*.zip -d extracted-reports/desktop
 
-      - name: Extract mobile report
+      - name: Extract mobile blob report
         run: |
           mkdir -p extracted-reports/mobile
-          unzip downloaded-reports/mobile/report.zip -d extracted-reports/mobile
+          unzip downloaded-reports/mobile/*.zip -d extracted-reports/mobile
 
       - name: List contents of extracted desktop report directory
         run: ls -R extracted-reports/desktop
