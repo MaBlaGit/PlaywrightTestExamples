@@ -86,10 +86,25 @@ jobs:
           path: downloaded-reports/mobile
           merge-multiple: true
 
+      - name: List contents of downloaded desktop report directory
+        run: ls -R downloaded-reports/desktop
+
+      - name: List contents of downloaded mobile report directory
+        run: ls -R downloaded-reports/mobile
+
       - name: Extract desktop report
-        run: unzip downloaded-reports/desktop/blob-report/*.zip -d extracted-reports/desktop
+        run: |
+          mkdir -p extracted-reports/desktop
+          for file in downloaded-reports/desktop/**/*.zip; do
+            unzip "$file" -d extracted-reports/desktop || true
+          done
+
       - name: Extract mobile report
-        run: unzip downloaded-reports/mobile/blob-report/*.zip -d extracted-reports/mobile
+        run: |
+          mkdir -p extracted-reports/mobile
+          for file in downloaded-reports/mobile/**/*.zip; do
+            unzip "$file" -d extracted-reports/mobile || true
+          done
 
       - name: Merge the blobs into one single HTML Report
         run: npx playwright merge-reports --reporter html extracted-reports/desktop extracted-reports/mobile
