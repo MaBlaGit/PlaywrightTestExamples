@@ -87,7 +87,7 @@ jobs:
           merge-multiple: true
 
       - name: Merge the blobs into one single HTML Report
-        run: npx playwright merge-reports --reporter html downloaded-reports/desktop/blob-report downloaded-reports/mobile/blob-report
+        run: npx playwright merge-reports --reporter html downloaded-reports/desktop downloaded-reports/mobile
     
       - name: Upload full HTML report to artifacts for history
         if: always()
