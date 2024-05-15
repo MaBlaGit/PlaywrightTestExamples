@@ -86,8 +86,13 @@ jobs:
           path: downloaded-reports/mobile
           merge-multiple: true
 
+      - name: Extract desktop report
+        run: unzip downloaded-reports/desktop/blob-report/*.zip -d extracted-reports/desktop
+      - name: Extract mobile report
+        run: unzip downloaded-reports/mobile/blob-report/*.zip -d extracted-reports/mobile
+
       - name: Merge the blobs into one single HTML Report
-        run: npx playwright merge-reports --reporter html downloaded-reports/desktop downloaded-reports/mobile
+        run: npx playwright merge-reports --reporter html extracted-reports/desktop extracted-reports/mobile
     
       - name: Upload full HTML report to artifacts for history
         if: always()
