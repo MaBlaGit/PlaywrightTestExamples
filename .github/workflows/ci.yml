@@ -95,16 +95,18 @@ jobs:
       - name: Extract desktop report
         run: |
           mkdir -p extracted-reports/desktop
-          for file in downloaded-reports/desktop/**/*.zip; do
-            unzip "$file" -d extracted-reports/desktop || true
-          done
+          unzip downloaded-reports/desktop/report.zip -d extracted-reports/desktop
 
       - name: Extract mobile report
         run: |
           mkdir -p extracted-reports/mobile
-          for file in downloaded-reports/mobile/**/*.zip; do
-            unzip "$file" -d extracted-reports/mobile || true
-          done
+          unzip downloaded-reports/mobile/report.zip -d extracted-reports/mobile
+
+      - name: List contents of extracted desktop report directory
+        run: ls -R extracted-reports/desktop
+
+      - name: List contents of extracted mobile report directory
+        run: ls -R extracted-reports/mobile
 
       - name: Merge the blobs into one single HTML Report
         run: npx playwright merge-reports --reporter html extracted-reports/desktop extracted-reports/mobile
