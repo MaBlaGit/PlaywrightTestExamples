@@ -9,7 +9,7 @@ on:
       - main
   workflow_dispatch:
 
-jobs:  
+jobs:
   playwright-desktop-test-examples:
     runs-on: ubuntu-latest
     strategy:
@@ -17,21 +17,21 @@ jobs:
     container:
       image: mcr.microsoft.com/playwright:v1.42.1-jammy
     steps:
-    - uses: actions/checkout@v4
-    - uses: actions/setup-node@v4
-      with:
-        node-version: 18
-    - name: Install dependencies
-      run: npm ci  
-    - name: Run Playwright Test Examples
-      run: npx playwright test --project=desktop
-    - name: Upload blob report to the Artifacts
-      if: always()
-      uses: actions/upload-artifact@v4
-      with:
-        name: playwright-test-examples-desktop-${{ github.run_id }}
-        path: blob-report
-        retention-days: 5
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 18
+      - name: Install dependencies
+        run: npm ci  
+      - name: Run Playwright Test Examples
+        run: npx playwright test --project=desktop
+      - name: Upload blob report to the Artifacts
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: playwright-test-examples-desktop-${{ github.run_id }}
+          path: blob-report
+          retention-days: 5
 
   playwright-mobile-test-examples:
     runs-on: ubuntu-latest
@@ -40,21 +40,21 @@ jobs:
     container:
       image: mcr.microsoft.com/playwright:v1.42.1-jammy
     steps:
-    - uses: actions/checkout@v4
-    - uses: actions/setup-node@v4
-      with:
-        node-version: 18
-    - name: Install dependencies
-      run: npm ci  
-    - name: Run Playwright Test Examples
-      run: npx playwright test --project=mobile
-    - name: Upload blob report to the Artifacts
-      if: always()
-      uses: actions/upload-artifact@v4
-      with:
-        name: playwright-test-examples-mobile-${{ github.run_id }}
-        path: blob-report
-        retention-days: 5
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 18
+      - name: Install dependencies
+        run: npm ci  
+      - name: Run Playwright Test Examples
+        run: npx playwright test --project=mobile
+      - name: Upload blob report to the Artifacts
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: playwright-test-examples-mobile-${{ github.run_id }}
+          path: blob-report
+          retention-days: 5
 
   merge-reports-and-upload:
     if: always()
@@ -73,21 +73,21 @@ jobs:
       - name: Install dependencies
         run: npm ci
     
-      - name: Download blob reports from GitHub Actions Artifacts
+      - name: Download desktop blob report from GitHub Actions Artifacts
         uses: actions/download-artifact@v4
         with:
           name: playwright-test-examples-desktop-${{ github.run_id }}
-          path: downloaded-merged-reports-as-blob
-      - name: Download blob reports from GitHub Actions Artifacts
+          path: downloaded-reports/desktop
+      - name: Download mobile blob report from GitHub Actions Artifacts
         uses: actions/download-artifact@v4
         with:
           name: playwright-test-examples-mobile-${{ github.run_id }}
-          path: downloaded-merged-reports-as-blob
+          path: downloaded-reports/mobile
 
       - name: Merge the blobs into one single HTML Report
-        run: npx playwright merge-reports --reporter html ./downloaded-merged-reports-as-blob
+        run: npx playwright merge-reports --reporter html downloaded-reports/desktop blob-report downloaded-reports/mobile blob-report
     
-      - name: Upload full html report to artifacts for history
+      - name: Upload full HTML report to artifacts for history
         if: always()
         uses: actions/upload-artifact@v4
         with:
@@ -95,7 +95,7 @@ jobs:
           path: playwright-report
           retention-days: 5
     
-      - name: Push the new files to github pages
+      - name: Push the new files to GitHub Pages
         uses: peaceiris/actions-gh-pages@v4
         with:
           github_token: ${{ secrets.GITHUB_TOKEN }}
@@ -104,4 +104,3 @@ jobs:
 
       - name: Write URL in summary
         run: echo "### Test results (link available after 20 secs) - https://${{ github.repository_owner }}.github.io/PlaywrightTestExamples/${{ steps.timestampid.outputs.timestamp }}/index.html" >> $GITHUB_STEP_SUMMARY
-        
