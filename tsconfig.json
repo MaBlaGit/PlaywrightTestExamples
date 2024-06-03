@@ -3,6 +3,7 @@
       "baseUrl": ".", 
       "paths": {
         "@root/*": ["./*"]
-      }
+      },
+      "types": ["node"]
     }
   }
