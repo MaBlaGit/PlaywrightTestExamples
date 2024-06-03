@@ -1,6 +1,7 @@
 import { Page, expect } from '@playwright/test';
 import { BasePage } from '@root/pages/base.page';
 import { ProgrammingLanguages, ValidationMessage } from '@root/helpers/index';
+import * as path from 'path';
 
 export class FormPage extends BasePage {
 	url = '/forms.html';
@@ -82,17 +83,17 @@ export class FormPage extends BasePage {
 	}
 
 	async uploadSingleFile(fileName: string): Promise<void> {
-		await this.fileUpload.setInputFiles(`../test-files/${fileName}`);
+		await this.fileUpload.setInputFiles(path.join(__dirname, `../test-files/${fileName}`));
 	}
 
 	async uploadMultipleFiles(...fileNames: string[]): Promise<void> {
-		const uploadFilesArray = fileNames.map((fileName) => {
-			return `../test-files/${fileName}`;
+		const uploadFilesArray: string[] = fileNames.map((fileName) => {
+			return path.join(__dirname, `../test-files/${fileName}`);
 		});
 		await this.filesUpload.setInputFiles(uploadFilesArray);
 	}
 
-	async fillFormWitValidations(
+	async fillFormWithValidations(
 		city: string,
 		state: string,
 		zip: string,
