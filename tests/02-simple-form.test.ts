@@ -3,7 +3,7 @@ import { addressFormData, formInputsData } from '@root/test-data/test-data';
 
 test.describe('Basic Form tests', () => {
 
-	test(`should be able to send form with all data`, async ({ formPage }) => {
+	test(`should be able to send form with all data`, { tag: '@fix-on-mobile' }, async ({ formPage }) => {
 		await formPage.selectLanguageCheckbox(formInputsData.checkboxLang);
 		await expect(formPage.selectedCheckboxValidationText).toHaveText(formInputsData.validationCheckboxLang);
 		await formPage.selectFramework(formInputsData.frameworkName);

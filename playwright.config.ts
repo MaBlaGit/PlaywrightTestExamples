@@ -17,8 +17,13 @@ export default defineConfig({
 	},
 	projects: [
 		{
-			name: 'chromium',
+			name: 'desktop',
 			use: { ...devices['Desktop Chrome'] },
+		},
+		{
+			name: 'mobile',
+			grepInvert: /@fix-on-mobile/,
+			use: { ...devices['iPhone SE'] },
 		},
 	],
 });
