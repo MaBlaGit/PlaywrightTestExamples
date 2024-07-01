@@ -15,7 +15,7 @@ jobs:
     strategy:
       fail-fast: false
     container:
-      image: mcr.microsoft.com/playwright:v1.44.1-jammy
+      image: mcr.microsoft.com/playwright:v1.45.0-jammy
     steps:
     - uses: actions/checkout@v4
     - uses: actions/setup-node@v4
